@@ -1,26 +1,64 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import React, { useState } from 'react';
+
+import MyLibraryTitle from './Atoms/MylibraryTitle/MyLibraryTitle';
+import MyTabs from './Atoms/Tabs/MyTabs';
+import MyAppBar from './Organisms/AppBar/MyAppBar';
+import AppBarWithCategories from './Organisms/AppBarWithCategories/AppBarWithCategories';
+import { Footer } from './Organisms/Footer/Footer';
+
+
 
 function App() {
+
+   const [value,setValue]=useState(0);
+   const [searchTerm,setSearchTerm]=useState('');
+
+   const handleChange=(e:React.MouseEventHandler<SVGSVGElement>,newValue: number)=>{
+    setValue(newValue);
+    
+  }
+  const handleSearchTerm= (e:React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>,newValue:string)=>
+  {
+     setSearchTerm(newValue);
+  }
+
+  const closeSearch = ()=>
+  {
+    setSearchTerm('');
+  }
+
+  
+   
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+<>     
+    <div id="appbar">
+       
+    { value===1 &&  <AppBarWithCategories handleChange={handleChange}/> }
+    {value===0 && <MyAppBar handleChange={handleChange}
+    handleSearchTerm={handleSearchTerm}  closeSearch={closeSearch}/>  }
+
+  <div id="librarytitle" style={{paddingLeft: '264px',marginTop:'89px'}}>
+    <MyLibraryTitle />
     </div>
+
+    <div id="mytabs" style={{paddingLeft: '264px'}}>
+    <MyTabs searchTerm={searchTerm} />
+    </div>
+
+       </div>    
+
+    <Footer />
+
+
+    </>
+
+   
   );
 }
+
+
 
 export default App;
